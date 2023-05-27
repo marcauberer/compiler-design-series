@@ -1,0 +1,10 @@
+# Build output
+bin/
+/cmake-*
+
+# Third party libs
+/lib
+/gen
+
+# LLVM
+/llvm
