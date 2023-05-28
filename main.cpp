@@ -9,7 +9,7 @@
  */
 int main(int argc, char **argv) {
   SourceFile mainSourceFile("./test.mathexpr");
-  mainSourceFile.runLexer();
+  mainSourceFile.parse();
 
   return EXIT_SUCCESS;
 }

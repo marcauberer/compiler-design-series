@@ -1,5 +1,5 @@
 #include "SourceFile.h"
 
-void SourceFile::runLexer() {
+void SourceFile::parse() {
 
 }

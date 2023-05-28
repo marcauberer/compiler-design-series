@@ -8,7 +8,7 @@ public:
   SourceFile(const std::string &filePath) : filePath(filePath) {}
 
   // Public methods
-  void runLexer();
+  void parse();
 
   // Public members
   std::string filePath;
