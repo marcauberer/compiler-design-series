@@ -1,3 +1,4 @@
+cmake_minimum_required(VERSION 3.17)
 project(MathExprLang)
 
 set(SOURCES
@@ -10,6 +11,7 @@ set(SOURCES
   lexer/Lexer.cpp
   lexer/Lexer.h
   parser/Parser.cpp
-  parser/Parser.h)
+  parser/Parser.h
+  ast/ASTNodes.h)
 
 add_executable(mathexpr ${SOURCES})

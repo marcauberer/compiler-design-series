@@ -79,6 +79,8 @@ Token Lexer::consumeKeywordOrIdentifier() {
     return Token{TOK_TYPE_INT, "int", codeLoc};
   if (ident == "double")
     return Token{TOK_TYPE_DOUBLE, "double", codeLoc};
+  if (ident == "print")
+    return Token{TOK_PRINT, "print", codeLoc};
 
   return Token{TOK_IDENTIFIER, ident, codeLoc};
 }
