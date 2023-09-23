@@ -51,6 +51,23 @@
     "any": "cpp",
     "ranges": "cpp",
     "span": "cpp",
-    "variant": "cpp"
+    "variant": "cpp",
+    "charconv": "cpp",
+    "chrono": "cpp",
+    "condition_variable": "cpp",
+    "cstring": "cpp",
+    "ctime": "cpp",
+    "list": "cpp",
+    "map": "cpp",
+    "set": "cpp",
+    "ratio": "cpp",
+    "format": "cpp",
+    "iomanip": "cpp",
+    "mutex": "cpp",
+    "semaphore": "cpp",
+    "shared_mutex": "cpp",
+    "stop_token": "cpp",
+    "thread": "cpp",
+    "cinttypes": "cpp"
   }
 }

@@ -2,6 +2,8 @@
 
 #include <string>
 
+#include <llvm/IR/Value.h>
+
 #include "../symboltable/SymbolType.h"
 
 // Forward declarations
@@ -15,6 +17,7 @@ public:
 
   // Public members
   const std::string name;
-  SymbolType type;
+  SymbolType type = SymbolType(TY_INVALID);
   ASTNode *declNode;
+  llvm::Value *address;
 };

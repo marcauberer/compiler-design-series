@@ -16,6 +16,7 @@ std::any TypeChecker::visitDeclStmt(ASTDeclStmtNode *node) {
   assert(varEntry != nullptr);
   varEntry->type = dataType;
 
+  node->setEvaluatedSymbolType(dataType);
   return ExprResult{dataType, varEntry};
 }
 
@@ -31,6 +32,7 @@ std::any TypeChecker::visitAdditiveExpr(ASTAdditiveExprNode *node) {
     throw std::runtime_error(node->codeLoc.print() + ": Cannot apply + operator on " + lhs.type.getName() + " and " +
                              rhs.type.getName());
 
+  node->setEvaluatedSymbolType(lhs.type);
   return ExprResult{lhs.type};
 }
 
@@ -46,6 +48,7 @@ std::any TypeChecker::visitMultiplicativeExpr(ASTMultiplicativeExprNode *node) {
     throw std::runtime_error(node->codeLoc.print() + ": Cannot apply * operator on " + lhs.type.getName() + " and " +
                              rhs.type.getName());
 
+  node->setEvaluatedSymbolType(lhs.type);
   return ExprResult{lhs.type};
 }
 
@@ -67,23 +70,32 @@ std::any TypeChecker::visitAtomicExpr(ASTAtomicExprNode *node) {
   const SymbolType &varType = node->referencedEntry->type;
   assert(!varType.is(TY_INVALID));
 
+  node->setEvaluatedSymbolType(varType);
   return ExprResult{varType, node->referencedEntry};
 }
 
 std::any TypeChecker::visitConstant(ASTConstantNode *node) {
+  SymbolType symbolType(TY_INVALID);
   if (node->type == ASTConstantNode::TYPE_INT)
-    return ExprResult{SymbolType(TY_INT)};
-  if (node->type == ASTConstantNode::TYPE_DOUBLE)
-    return ExprResult{SymbolType(TY_DOUBLE)};
-  assert(false && "TypeChecker - Constant fall-through");
-  return nullptr;
+    symbolType = SymbolType(TY_INT);
+  else if (node->type == ASTConstantNode::TYPE_DOUBLE)
+    symbolType = SymbolType(TY_DOUBLE);
+  else
+    assert(false && "TypeChecker - Constant fall-through");
+
+  node->setEvaluatedSymbolType(symbolType);
+  return ExprResult{symbolType};
 }
 
 std::any TypeChecker::visitDataType(ASTDataTypeNode *node) {
+  SymbolType symbolType(TY_INVALID);
   if (node->type == ASTDataTypeNode::TYPE_INT)
-    return SymbolType(TY_INT);
-  if (node->type == ASTDataTypeNode::TYPE_DOUBLE)
-    return SymbolType(TY_DOUBLE);
-  assert(false && "TypeChecker - DataType fall-through");
-  return nullptr;
+    symbolType = SymbolType(TY_INT);
+  else if (node->type == ASTDataTypeNode::TYPE_DOUBLE)
+    symbolType = SymbolType(TY_DOUBLE);
+  else
+    assert(false && "TypeChecker - DataType fall-through");
+
+  node->setEvaluatedSymbolType(symbolType);
+  return symbolType;
 }

@@ -19,6 +19,15 @@ std::string SymbolType::getName() const {
     assert(false && "Unknown super type");
 }
 
+llvm::Type *SymbolType::toLLVMType(llvm::LLVMContext &context) const {
+  if (is(TY_INT))
+    return llvm::Type::getInt32Ty(context);
+  if (is(TY_DOUBLE))
+    return llvm::Type::getDoubleTy(context);
+  assert(false && "Cannot determine LLVM type");
+  return nullptr;
+}
+
 bool operator==(const SymbolType &lhs, const SymbolType &rhs) { return lhs.superType == rhs.superType; }
 
 bool operator!=(const SymbolType &lhs, const SymbolType &rhs) { return !(lhs == rhs); }

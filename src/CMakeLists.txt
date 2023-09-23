@@ -23,7 +23,9 @@ set(SOURCES
   symboltable/SymbolTableBuilder.cpp
   symboltable/SymbolTableBuilder.h
   typechecker/TypeChecker.cpp
-  typechecker/TypeChecker.h)
+  typechecker/TypeChecker.h
+  irgenerator/IRGenerator.cpp
+  irgenerator/IRGenerator.h)
 
 add_executable(mathexpr ${SOURCES})
 

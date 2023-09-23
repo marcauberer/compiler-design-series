@@ -19,7 +19,7 @@ public:
 
 private:
   // Private members
-  Reader reader = Reader(sourceFile->filePath.c_str());
+  Reader reader = Reader(sourceFile->filePath);
   Token curTok = Token(TOK_INVALID);
 
   // Private methods

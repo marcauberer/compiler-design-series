@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstdint>
+#include <filesystem>
 #include <fstream>
 #include <iostream>
 
@@ -9,7 +10,7 @@
 class Reader {
 public:
   // Constructors
-  explicit Reader(const char *filePath);
+  explicit Reader(const std::filesystem::path &filePath);
   ~Reader();
 
   // Public methods

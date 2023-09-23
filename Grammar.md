@@ -1,5 +1,6 @@
-Grammar:
+## Grammar:
 
+```
 entry = stmt* EOF
 stmt = (declStmt | printCall) TOK_SEMICOLON
 declStmt = dataType TOK_IDENTIFIER TOK_ASSIGN additiveExpr
@@ -9,9 +10,11 @@ atomicExpr = constant | TOK_IDENTIFIER | TOK_LPAREN additiveExpr TOK_RPAREN
 constant = TOK_INT_LIT | TOK_DOUBLE_LIT
 printCall = TOK_PRINT TOK_LPAREN additiveExpr TOK_RPAREN
 dataType = TOK_TYPE_INT | TOK_TYPE_DOUBLE
+```
 
-Tokens:
+## Tokens:
 
+```
 TOK_INVALID
 TOK_INT_LIT
 TOK_DOUBLE_LIT
@@ -28,3 +31,4 @@ TOK_LPAREN
 TOK_RPAREN
 TOK_SEMICOLON
 TOK_EOF
+```

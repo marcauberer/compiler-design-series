@@ -2,7 +2,7 @@
 
 #include <cassert>
 
-Reader::Reader(const char *filePath) {
+Reader::Reader(const std::filesystem::path &filePath) {
   input = std::ifstream(filePath);
   assert(input.is_open());
 

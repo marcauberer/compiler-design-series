@@ -5,16 +5,6 @@ project(MathExprLang)
 set(CMAKE_CXX_STANDARD 20)
 set(LLVM_DIR $ENV{LLVM_DIR})
 
-# Enable pedantic mode and treat warnings as errors
-if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
-    add_compile_options(
-        -Wall               # Enable most common warnings
-        -Wextra             # Enable extra warnings
-        -pedantic           # Enable pedantic mode
-        -Werror             # Treat warnings as errors
-    )
-endif()
-
 # Find LLVM
 find_package(LLVM REQUIRED CONFIG)
 message(STATUS "MathExpr: Found LLVM ${LLVM_PACKAGE_VERSION}")

@@ -46,10 +46,21 @@ public:
     return nodes;
   }
 
+  void setEvaluatedSymbolType(const SymbolType &symbolType) { this->symbolType = symbolType; }
+
+  [[nodiscard]] const SymbolType &getEvaluatedSymbolType() const { // NOLINT(misc-no-recursion)
+    if (!symbolType.is(TY_INVALID))
+      return symbolType;
+    if (children.size() != 1)
+      throw std::runtime_error("Cannot deduce evaluated symbol type");
+    return children.front()->getEvaluatedSymbolType();
+  }
+
   // Public members
   ASTNode *parent;
   std::vector<ASTNode *> children;
   const CodeLoc codeLoc;
+  SymbolType symbolType = SymbolType(TY_INVALID);
 };
 
 class ASTEntryNode : public ASTNode {
@@ -87,6 +98,7 @@ public:
 
   // Public members
   std::string varName;
+  SymbolTableEntry *varEntry = nullptr;
 };
 
 class ASTAdditiveExprNode : public ASTNode {
@@ -167,6 +179,10 @@ public:
 
   // Public members
   Type type = TYPE_NONE;
+  union {
+    int32_t intValue;
+    double doubleValue;
+  } compileTimeVaue;
 };
 
 class ASTPrintCallNode : public ASTNode {

@@ -13,6 +13,8 @@ int main(void) {
   sourceFile.createSymbolTable();
   std::cout << "Type checking ..." << std::endl;
   sourceFile.typeCheck();
+  std::cout << "Generating IR code ..." << std::endl;
+  sourceFile.generateIR();
 
   return EXIT_SUCCESS;
 }

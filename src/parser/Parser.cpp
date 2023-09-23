@@ -111,11 +111,13 @@ ASTAtomicExprNode *Parser::parseAtomicExpr() {
 ASTConstantNode *Parser::parseConstant() {
   ASTConstantNode *constantNode = createNode<ASTConstantNode>();
 
-  const TokenType curTok = lexer.getToken().type;
-  if (curTok == TOK_INT_LIT) {
+  const Token &curTok = lexer.getToken();
+  if (curTok.type == TOK_INT_LIT) {
     constantNode->type = ASTConstantNode::TYPE_INT;
-  } else if (curTok == TOK_DOUBLE_LIT) {
+    constantNode->compileTimeVaue.intValue = std::stoi(curTok.text);
+  } else if (curTok.type == TOK_DOUBLE_LIT) {
     constantNode->type = ASTConstantNode::TYPE_DOUBLE;
+    constantNode->compileTimeVaue.doubleValue = std::stod(curTok.text);
   }
   lexer.expectOneOf({TOK_INT_LIT, TOK_DOUBLE_LIT});
 
