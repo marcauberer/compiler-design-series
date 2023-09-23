@@ -5,7 +5,7 @@
 ASTEntryNode *Parser::parse() {
   ASTEntryNode *entryNode = createNode<ASTEntryNode>();
 
-  while (lexer.getToken().type == TOK_EOF) {
+  while (lexer.getToken().type != TOK_EOF) {
     parseStmt();
   }
 
@@ -33,6 +33,8 @@ ASTDeclStmtNode *Parser::parseDeclStmt() {
 
   // Parse
   parseDataType();
+  const Token &token = lexer.getToken();
+  declStmtNode->varName = token.text;
   lexer.expect(TOK_IDENTIFIER);
   lexer.expect(TOK_ASSIGN);
   parseAdditiveExpr();
@@ -152,8 +154,8 @@ template <typename T> T *Parser::createNode() {
     parent = parentStack.top();
 
   // Create the new node
-  astNodes.push_back(std::make_unique<T>(parent, lexer.getCodeLoc()));
-  T *node = static_cast<T *>(astNodes.back().get());
+  sourceFile->astNodes.push_back(std::make_unique<T>(parent, lexer.getCodeLoc()));
+  T *node = static_cast<T *>(sourceFile->astNodes.back().get());
 
   // If this is not the entry node, we need to add the new node to its parent
   if constexpr (!std::is_same_v<T, ASTEntryNode>)

@@ -1,2 +1,5 @@
+int a = 123;
+int b = 2;
+int c = 34;
 int d = a + b * c;
 print(d);

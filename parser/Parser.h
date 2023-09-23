@@ -3,15 +3,15 @@
 #include <stack>
 #include <memory>
 
-#include "../CompilePhase.h"
+#include "../CompilerPass.h"
 #include "../ast/ASTNodes.h"
 #include "../lexer/Lexer.h"
 
-class Parser : public CompilePhase {
+class Parser : public CompilerPass {
 public:
   // Constructor
   Parser(SourceFile *sourceFile, Lexer &lexer)
-      : CompilePhase(sourceFile), lexer(lexer) {}
+      : CompilerPass(sourceFile), lexer(lexer) {}
 
   ASTEntryNode *parse();
   ASTStmtNode *parseStmt();
@@ -27,7 +27,6 @@ private:
   // Private members
   Lexer &lexer;
   std::stack<ASTNode *> parentStack;
-  std::vector<std::unique_ptr<ASTNode>> astNodes;
 
   // Private methods
   template <typename T> T *createNode();

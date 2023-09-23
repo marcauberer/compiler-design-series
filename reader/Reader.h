@@ -4,12 +4,7 @@
 #include <fstream>
 #include <iostream>
 
-struct CodeLoc {
-  uint64_t line;
-  uint64_t column;
-
-  [[nodiscard]] std::string print() const;
-};
+#include "../reader/CodeLoc.h"
 
 class Reader {
 public:

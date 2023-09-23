@@ -1,19 +1,18 @@
 #include "SourceFile.h"
 
-#include <iostream>
-
 /**
  * @brief Entry point to the MathExpr compiler
  *
- * @param argc Argument count
- * @param argv Argument values
  * @return int Exit code
  */
-int main(int argc, char **argv) {
-  SourceFile mainSourceFile("./test.mathexpr");
+int main(void) {
+  SourceFile sourceFile("./test.mathexpr");
   std::cout << "Parsing ..." << std::endl;
-  mainSourceFile.parse();
+  sourceFile.parse();
+  std::cout << "Create symbol table ..." << std::endl;
+  sourceFile.createSymbolTable();
   std::cout << "Type checking ..." << std::endl;
+  sourceFile.typeCheck();
 
   return EXIT_SUCCESS;
 }

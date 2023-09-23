@@ -2,10 +2,10 @@
 
 #include "SourceFile.h"
 
-class CompilePhase {
+class CompilerPass {
 public:
   // Constructors
-  explicit CompilePhase(SourceFile *sourceFile) : sourceFile(sourceFile) {}
+  explicit CompilerPass(SourceFile *sourceFile) : sourceFile(sourceFile) {}
 
 protected:
   // Protected members

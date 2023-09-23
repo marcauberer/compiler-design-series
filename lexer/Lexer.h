@@ -1,10 +1,10 @@
 #pragma once
 
-#include "../CompilePhase.h"
+#include "../CompilerPass.h"
 #include "../reader/Reader.h"
 #include "Token.h"
 
-class Lexer : public CompilePhase {
+class Lexer : public CompilerPass {
 public:
   // Constructor
   explicit Lexer(SourceFile *sourceFile);

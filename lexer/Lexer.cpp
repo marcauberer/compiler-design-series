@@ -4,7 +4,7 @@
 #include <cassert>
 #include <sstream>
 
-Lexer::Lexer(SourceFile *sourceFile) : CompilePhase(sourceFile) {
+Lexer::Lexer(SourceFile *sourceFile) : CompilerPass(sourceFile) {
   // Read first token
   advance();
 }

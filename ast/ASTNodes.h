@@ -1,14 +1,12 @@
 #pragma once
 
+#include <any>
 #include <string>
 #include <vector>
-#include <any>
 
 #include "../ast/ASTVisitor.h"
 #include "../reader/Reader.h"
-
-// Forward declarde nodes
-
+#include "../symboltable/SymbolTableEntry.h"
 
 class ASTNode {
 public:
@@ -149,6 +147,7 @@ public:
 
   // Private members
   std::string referencedVariableName;
+  SymbolTableEntry *referencedEntry;
 };
 
 class ASTConstantNode : public ASTNode {
@@ -164,7 +163,7 @@ public:
   using ASTNode::ASTNode;
 
   // Visitor methods
-  std::any accept(ASTVisitor *visitor) override { return visitor->visitCosntant(this); }
+  std::any accept(ASTVisitor *visitor) override { return visitor->visitConstant(this); }
 
   // Public members
   Type type = TYPE_NONE;
