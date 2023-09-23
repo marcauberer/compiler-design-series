@@ -1,5 +1,7 @@
 #include "SourceFile.h"
 
+#include <iostream>
+
 /**
  * @brief Entry point to the MathExpr compiler
  *
@@ -9,7 +11,9 @@
  */
 int main(int argc, char **argv) {
   SourceFile mainSourceFile("./test.mathexpr");
+  std::cout << "Parsing ..." << std::endl;
   mainSourceFile.parse();
+  std::cout << "Type checking ..." << std::endl;
 
   return EXIT_SUCCESS;
 }

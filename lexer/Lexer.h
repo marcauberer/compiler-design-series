@@ -7,17 +7,20 @@
 class Lexer : public CompilePhase {
 public:
   // Constructor
-  explicit Lexer(SourceFile *sourceFile) : CompilePhase(sourceFile) {}
+  explicit Lexer(SourceFile *sourceFile);
 
   // Public methods
-  Token getToken() const;
+  const Token &getToken() const;
   void advance();
-  void expect(TokenType token);
+  void expect(TokenType expectedType);
+  void expectOneOf(const std::initializer_list<TokenType> &expectedTypes);
+  bool isEOF() const;
+  CodeLoc getCodeLoc() const;
 
 private:
   // Private members
   Reader reader = Reader(sourceFile->filePath.c_str());
-  Token curTok;
+  Token curTok = Token(TOK_INVALID);
 
   // Private methods
   Token consumeToken();

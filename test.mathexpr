@@ -1,1 +1,2 @@
 int d = a + b * c;
+print(d);

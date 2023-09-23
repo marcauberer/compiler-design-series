@@ -10,6 +10,10 @@ Reader::Reader(const char *filePath) {
   advance();
 }
 
+Reader::~Reader() {
+  input.close();
+}
+
 /**
  * @brief Get the previously read character
  *
@@ -28,7 +32,9 @@ CodeLoc Reader::getCodeLoc() const { return curCodeLoc; }
  * @brief Advance the reader by one character
  */
 void Reader::advance() {
-  input.get(curChar);
+  assert(!isEOF());
+  if (!input.get(curChar))
+    moreToRead = false;
   if (curChar == '\n') {
     curCodeLoc.line++;
     curCodeLoc.column = 0;
@@ -45,4 +51,13 @@ void Reader::advance() {
 void Reader::expect(char c) {
   advance();
   assert(curChar == c);
+}
+
+/**
+ * @brief Check if we are at the end of the input file
+ * 
+ * @return At the end or not
+ */
+bool Reader::isEOF() const {
+  return !moreToRead;
 }

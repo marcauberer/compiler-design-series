@@ -1,47 +1,71 @@
 #include "Lexer.h"
 
+#include <algorithm>
 #include <cassert>
 #include <sstream>
 
-Token Lexer::getToken() const { return curTok; }
+Lexer::Lexer(SourceFile *sourceFile) : CompilePhase(sourceFile) {
+  // Read first token
+  advance();
+}
+
+const Token &Lexer::getToken() const { return curTok; }
 
 void Lexer::advance() {
   // Skip any whitespaces
-  while (isspace(reader.getChar()))
+  while (isspace(reader.getChar()) && !reader.isEOF())
     reader.advance();
 
   curTok = consumeToken();
 }
 
 void Lexer::expect(TokenType expectedType) {
-  advance();
   assert(curTok.type == expectedType);
+  advance();
 }
+
+void Lexer::expectOneOf(const std::initializer_list<TokenType> &expectedTypes) {
+  const auto matcher = [&](const TokenType &expectedType) { return curTok.type == expectedType; };
+  assert(std::any_of(expectedTypes.begin(), expectedTypes.end(), matcher));
+  advance();
+}
+
+bool Lexer::isEOF() const { return reader.isEOF(); }
+
+CodeLoc Lexer::getCodeLoc() const { return reader.getCodeLoc(); }
 
 Token Lexer::consumeToken() {
   // Get the current char from the reader instance
   const char curChar = reader.getChar();
 
   // Check if EOF
-  if (reader.getChar() == EOF)
-    return Token{TOK_EOF, "EOF", reader.getCodeLoc()};
+  if (reader.isEOF())
+    return Token(TOK_EOF, "EOF", reader.getCodeLoc());
 
-  switch (curChar) {
-  case '=':
-    return Token{TOK_ASSIGN, "=", reader.getCodeLoc()};
-  case '+':
-    return Token{TOK_PLUS, "+", reader.getCodeLoc()};
-  case '-':
-    return Token{TOK_MINUS, "-", reader.getCodeLoc()};
-  case '*':
-    return Token{TOK_MUL, "*", reader.getCodeLoc()};
-  case '/':
-    return Token{TOK_DIV, "/", reader.getCodeLoc()};
-  }
   if (isalpha(curChar) || curChar == '_')
     return consumeKeywordOrIdentifier();
   if (isdigit(curChar))
     return consumeNumber();
+
+  reader.advance();
+  switch (curChar) {
+  case '=':
+    return Token(TOK_ASSIGN, "=", reader.getCodeLoc());
+  case '+':
+    return Token(TOK_PLUS, "+", reader.getCodeLoc());
+  case '-':
+    return Token(TOK_MINUS, "-", reader.getCodeLoc());
+  case '*':
+    return Token(TOK_MUL, "*", reader.getCodeLoc());
+  case '/':
+    return Token(TOK_DIV, "/", reader.getCodeLoc());
+  case ';':
+    return Token(TOK_SEMICOLON, ";", reader.getCodeLoc());
+  case '(':
+    return Token(TOK_LPAREN, "(", reader.getCodeLoc());
+  case ')':
+    return Token(TOK_RPAREN, ")", reader.getCodeLoc());
+  }
 
   assert(false && "Unexpected char");
 }
@@ -60,7 +84,7 @@ Token Lexer::consumeNumber() {
     reader.advance();
   } while (isdigit(reader.getChar()) || (reader.getChar() == '.' && !seenDot));
 
-  return Token{seenDot ? TOK_DOUBLE_LIT : TOK_INT_LIT, numberStream.str(), codeLoc};
+  return Token(seenDot ? TOK_DOUBLE_LIT : TOK_INT_LIT, numberStream.str(), codeLoc);
 }
 
 Token Lexer::consumeKeywordOrIdentifier() {
@@ -76,16 +100,16 @@ Token Lexer::consumeKeywordOrIdentifier() {
   // Check if keyword
   const std::string &ident = identStream.str();
   if (ident == "int")
-    return Token{TOK_TYPE_INT, "int", codeLoc};
+    return Token(TOK_TYPE_INT, "int", codeLoc);
   if (ident == "double")
-    return Token{TOK_TYPE_DOUBLE, "double", codeLoc};
+    return Token(TOK_TYPE_DOUBLE, "double", codeLoc);
   if (ident == "print")
-    return Token{TOK_PRINT, "print", codeLoc};
+    return Token(TOK_PRINT, "print", codeLoc);
 
-  return Token{TOK_IDENTIFIER, ident, codeLoc};
+  return Token(TOK_IDENTIFIER, ident, codeLoc);
 }
 
 Token Lexer::consumeSemicolon() {
   reader.expect(TOK_SEMICOLON);
-  return Token{TOK_SEMICOLON, ";", reader.getCodeLoc()};
+  return Token(TOK_SEMICOLON, ";", reader.getCodeLoc());
 }

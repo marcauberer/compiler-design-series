@@ -47,6 +47,10 @@
     "streambuf": "cpp",
     "typeinfo": "cpp",
     "sstream": "cpp",
-    "queue": "cpp"
+    "queue": "cpp",
+    "any": "cpp",
+    "ranges": "cpp",
+    "span": "cpp",
+    "variant": "cpp"
   }
 }

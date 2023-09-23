@@ -18,6 +18,8 @@ enum TokenType {
   TOK_MINUS,
   TOK_MUL,
   TOK_DIV,
+  TOK_LPAREN,
+  TOK_RPAREN,
   TOK_SEMICOLON,
   TOK_EOF
 };
@@ -26,4 +28,8 @@ struct Token {
   TokenType type;
   std::string text;
   CodeLoc codeLoc;
+
+  explicit Token(TokenType type) : type(type) {}
+  Token(TokenType type, const std::string &text, const CodeLoc &codeLoc) : type(type), text(text), codeLoc(codeLoc) {}
+  Token(const Token &) = delete;
 };
