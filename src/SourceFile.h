@@ -7,6 +7,7 @@
 
 #include <llvm/IR/LLVMContext.h>
 #include <llvm/IR/Module.h>
+#include <llvm/Target/TargetMachine.h>
 
 #include "symboltable/SymbolTable.h"
 
@@ -20,6 +21,8 @@ public:
   void createSymbolTable();
   void typeCheck();
   void generateIR();
+  void optimizeIR();
+  void emitObject();
 
   // Public members
   std::filesystem::path filePath;
@@ -27,6 +30,7 @@ public:
   std::vector<std::unique_ptr<ASTNode>> astNodes;
   llvm::LLVMContext context;
   std::unique_ptr<llvm::Module> llvmModule;
+  std::unique_ptr<llvm::TargetMachine> targetMachine;
 
 private:
   // Private members

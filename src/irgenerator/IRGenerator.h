@@ -29,6 +29,8 @@ public:
   std::any visitPrintCall(ASTPrintCallNode *node) override;
   std::any visitDataType(ASTDataTypeNode *node) override;
 
+  [[nodiscard]] std::string getIRString() const;
+
 private:
   // Private members
   llvm::LLVMContext &context;

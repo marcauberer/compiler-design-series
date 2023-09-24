@@ -2,6 +2,8 @@
 bin/
 build/
 /cmake-*
+*.o
+*.exe
 
 # Third party libs
 /lib

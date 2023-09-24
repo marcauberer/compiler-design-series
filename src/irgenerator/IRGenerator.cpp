@@ -3,8 +3,13 @@
 #include <cassert>
 
 #include <llvm/IR/Verifier.h>
+#include <llvm/TargetParser/Host.h>
 
 std::any IRGenerator::visitEntry(ASTEntryNode *node) {
+  // Attach information to the module
+  llvmModule->setTargetTriple(llvm::sys::getDefaultTargetTriple());
+  llvmModule->setDataLayout(sourceFile->targetMachine->createDataLayout());
+
   // Create main function
   llvm::Type *returnType = builder.getInt32Ty();
   llvm::FunctionType *fctType = llvm::FunctionType::get(returnType, {}, false);
@@ -48,7 +53,7 @@ std::any IRGenerator::visitDeclStmt(ASTDeclStmtNode *node) {
 
   // Allocate variable
   llvm::Type *llvmType = varSymbolType.toLLVMType(context);
-  llvm::Value *varAddress = insertAlloca(llvmType, varEntry->name);
+  llvm::Value *varAddress = insertAlloca(llvmType, varEntry->name + ".addr");
   varEntry->address = varAddress;
 
   // Visit rhs
@@ -74,8 +79,8 @@ std::any IRGenerator::visitAdditiveExpr(ASTAdditiveExprNode *node) {
 
   // Evaluate second operand
   ASTMultiplicativeExprNode *rhsNode = node->operands().at(1);
-  SymbolType rhsSTy = lhsNode->getEvaluatedSymbolType();
-  auto rhs = std::any_cast<LLVMExprResult>(visit(lhsNode));
+  SymbolType rhsSTy = rhsNode->getEvaluatedSymbolType();
+  auto rhs = std::any_cast<LLVMExprResult>(visit(rhsNode));
 
   assert(lhsSTy == rhsSTy);
   assert(node->op != ASTAdditiveExprNode::OP_NONE);
@@ -112,8 +117,8 @@ std::any IRGenerator::visitMultiplicativeExpr(ASTMultiplicativeExprNode *node) {
 
   // Evaluate second operand
   ASTAtomicExprNode *rhsNode = node->operands().at(1);
-  SymbolType rhsSTy = lhsNode->getEvaluatedSymbolType();
-  auto rhs = std::any_cast<LLVMExprResult>(visit(lhsNode));
+  SymbolType rhsSTy = rhsNode->getEvaluatedSymbolType();
+  auto rhs = std::any_cast<LLVMExprResult>(visit(rhsNode));
 
   assert(lhsSTy == rhsSTy);
   assert(node->op != ASTMultiplicativeExprNode::OP_NONE);
@@ -189,6 +194,13 @@ std::any IRGenerator::visitDataType(ASTDataTypeNode *node) {
   SymbolType symbolType = node->getEvaluatedSymbolType();
   assert(!symbolType.is(TY_INVALID));
   return symbolType.toLLVMType(context);
+}
+
+std::string IRGenerator::getIRString() const {
+  std::string output;
+  llvm::raw_string_ostream oss(output);
+  llvmModule->print(oss, nullptr);
+  return oss.str();
 }
 
 llvm::Value *IRGenerator::insertAlloca(llvm::Type *llvmType, const std::string &varName) {

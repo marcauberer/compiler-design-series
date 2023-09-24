@@ -15,6 +15,13 @@ int main(void) {
   sourceFile.typeCheck();
   std::cout << "Generating IR code ..." << std::endl;
   sourceFile.generateIR();
+  std::cout << "Optimizing IR code ..." << std::endl;
+  sourceFile.optimizeIR();
+  std::cout << "Emit object file ..." << std::endl;
+  sourceFile.emitObject();
+
+  // Invoke external linker
+  
 
   return EXIT_SUCCESS;
 }
