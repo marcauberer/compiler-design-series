@@ -19,9 +19,7 @@ int main(void) {
   sourceFile.optimizeIR();
   std::cout << "Emit object file ..." << std::endl;
   sourceFile.emitObject();
-
-  // Invoke external linker
-  
+  std::cout << "Finished compilation. Executable file emitted." << std::endl;
 
   return EXIT_SUCCESS;
 }

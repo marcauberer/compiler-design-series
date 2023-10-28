@@ -4,7 +4,8 @@
 
 Reader::Reader(const std::filesystem::path &filePath) {
   input = std::ifstream(filePath);
-  assert(input.is_open());
+  if (!input.is_open())
+    throw std::runtime_error("Reader error: Source file could not be read");
 
   // Read first character
   advance();

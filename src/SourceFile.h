@@ -14,7 +14,7 @@
 class SourceFile {
 public:
   // Constructor
-  SourceFile(const std::filesystem::path &filePath);
+  explicit SourceFile(const std::filesystem::path &filePath);
 
   // Public methods
   void parse();

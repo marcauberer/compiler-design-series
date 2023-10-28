@@ -1,4 +1,7 @@
-# Excercise project for the Compiler Design article series
+# Compiler Design article series - MathExpr toy language
+
+This is a minimalistic, machine code generating compiler for the `MathExpr` toy language. This language supports
+evaluating simple, methematical expressions, storing the results to variables and printing results.
 
 You can find the articles on Medium:
 
@@ -10,13 +13,6 @@ You can find the articles on Medium:
 - [IR Generator]()
 - [Backend]()
 
-To start implementing with the first part of the series (lexer part), you can checkout the `part1` branch.
-
-```shell
-git clone https://github.com/marcauberer/compiler-design-series.git
-git checkout part1
-```
-
-If you broke your project, you can checkout a snapshot before each part (branches `part<x>`).
+If you are not interested in the technical setup of the project, you can simply create an own GitHub repo from [this repo template](https://github.com/marcauberer/compiler-design-series-init).
 
 © Marc Auberer 2023

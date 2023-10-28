@@ -13,7 +13,7 @@ struct ExprResult {
 class TypeChecker : private CompilerPass, public ASTVisitor {
 public:
   // Constructor
-  TypeChecker(SourceFile *sourceFile) : CompilerPass(sourceFile) {}
+  explicit TypeChecker(SourceFile *sourceFile) : CompilerPass(sourceFile) {}
 
   // Public methods
   std::any visitDeclStmt(ASTDeclStmtNode *node) override;
