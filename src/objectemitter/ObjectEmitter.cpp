@@ -13,7 +13,7 @@ void ObjectEmitter::emit() const {
     throw std::runtime_error("File '" + objectFile.string() + "' could not be opened");
 
   llvm::legacy::PassManager passManager;
-  if (targetMachine->addPassesToEmitFile(passManager, stream, nullptr, llvm::CGFT_ObjectFile, false))
+  if (targetMachine->addPassesToEmitFile(passManager, stream, nullptr, llvm::CodeGenFileType::ObjectFile, false))
     throw std::runtime_error("Target machine can't emit a file of this type");
 
   // Emit object file

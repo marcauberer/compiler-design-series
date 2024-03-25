@@ -215,7 +215,7 @@ llvm::Value *IRGenerator::insertAlloca(llvm::Type *llvmType, const std::string &
 }
 
 llvm::Function *IRGenerator::getPrintfFct() {
-  llvm::Function *printfFct = getFunction("printf", builder.getInt32Ty(), builder.getInt8PtrTy(), true);
+  llvm::Function *printfFct = getFunction("printf", builder.getInt32Ty(), builder.getPtrTy(), true);
   // Set attributes
   printfFct->addFnAttr(llvm::Attribute::NoFree);
   printfFct->addFnAttr(llvm::Attribute::NoUnwind);

@@ -8,11 +8,11 @@ You can find the articles on Medium:
 - [Introduction](https://medium.com/p/c6ec5e258a6)
 - [Lexer](https://medium.com/p/1d688c6e5d16)
 - [Parser](https://medium.com/p/7bf4b7381ca5)
-- [Symbol Table Generator]()
-- [Type Checker]()
-- [IR Generator]()
-- [Backend]()
+- [Symbol Table Generator](https://medium.com/p/2d4582234112)
+- [Type Checker](https://medium.com/p/f77af89dd146)
+- [IR Generator](https://medium.com/p/0dd7a6458175)
+- [Backend](https://medium.com/p/d3b15a6ce776)
 
 If you are not interested in the technical setup of the project, you can simply create an own GitHub repo from [this repo template](https://github.com/marcauberer/compiler-design-series-init).
 
-© Marc Auberer 2023
+© Marc Auberer 2023-2024
