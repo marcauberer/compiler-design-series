@@ -11,6 +11,7 @@ You can find the articles on Medium:
 - [Symbol Table Generator](https://medium.com/p/2d4582234112)
 - [Type Checker](https://medium.com/p/f77af89dd146)
 - [IR Generator](https://medium.com/p/0dd7a6458175)
+- [Optimization](https://medium.com/p/14dcf58aeb75)
 - [Backend](https://medium.com/p/d3b15a6ce776)
 
 If you are not interested in the technical setup of the project, you can simply create an own GitHub repo from [this repo template](https://github.com/marcauberer/compiler-design-series-init).
